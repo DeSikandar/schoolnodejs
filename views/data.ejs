@@ -1,0 +1,32 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Student Name</th>
+            <th scope="col">Math</th>
+            <th scope="col">Science</th>
+            <th scope="col">English</th>
+            <th scope="col">Total</th>
+            <th scope="col">%</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <% student.map((s,index)=>{%>
+
+        <tr>
+            <th scope="row"><%=index%></th>
+            <td><%=s.student.name%></td>
+            <td><%=s.math%></td>
+            <td><%=s.science%></td>
+            <td><%=s.english%></td>
+            <td><%=s.math+s.science+s.english%></td>
+            <td><%=((s.math+s.science+s.english)/3).toFixed(2)%></td>
+            <td><a href="marks/delet/<%=s.id%>" class="btn btn-danger">Delete</a></td>
+        </tr>
+        <%})%>
+
+
+    </tbody>
+</table>
