@@ -1,6 +1,7 @@
 const { User } = require('../models');
 const Joi = require('joi');
 const bcrypt = require('bcryptjs');
+const response = require('../helper');
 
 const controller = {
   async login(req, res) {
@@ -10,14 +11,29 @@ const controller = {
       .select('+password')
       .exec();
     if (!user) {
-      res.send('user not found');
+      const resData = {
+        message: 'user not found',
+        statusCode: 203,
+        success: false,
+        data: {},
+      };
+      response.response.send(res, resData);
+      // res.send('user not found');
     }
     bcrypt.compare(password, user.password, (err, isMatch) => {
       if (err) {
-        res.send('password not match');
+        const resData = {
+          message: 'password not match',
+          statusCode: 203,
+          success: false,
+          data: {},
+        };
+        response.response.send(res, resData);
+        // res.send('password not match');
+      } else {
+        const token = response.gards.createToken(user);
+        response.response.success(res, token);
       }
-
-      res.send(isMatch);
     });
     // res.send(user);
   },
