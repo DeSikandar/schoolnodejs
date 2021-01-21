@@ -2,7 +2,8 @@ const router = require('express').Router();
 const controller = require('../controller');
 const helper = require('../helper');
 
-router.post('/', helper.gards.checkUser, controller.studentregister);
-router.get('/', helper.gards.checkUser, controller.studentdetails);
+router.post('/', controller.studentregister);
+router.get('/', controller.studentdetails);
+router.get('/all', controller.task);
 
 module.exports = router;

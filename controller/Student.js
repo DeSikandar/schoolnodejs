@@ -1,6 +1,118 @@
 const { response } = require('../helper');
 const Joi = require('joi');
-const { Student } = require('../models');
+const { Student, User } = require('../models');
+const { autoInject, auto, parallel, waterfall } = require('async');
+
+const task = (req, res) => {
+  //     //autoinject
+  //     autoInject(
+  //     {
+  //       get_student: function (callback) {
+  //         // async code to get some data
+  //         Student.find()
+  //           .then((resss) => {
+  //             callback(null, 'data', resss);
+  //           })
+  //           .catch((err) => {
+  //             callback(err);
+  //           });
+  //       },
+  //       get_user: function (callback) {
+  //         User.find()
+  //           .then((resu) => {
+  //             callback(null, 'data', resu);
+  //           })
+  //           .catch((error) => {
+  //             callback(error);
+  //           });
+  //       },
+  //     },
+  //     function (err, results) {
+  //       if (err) {
+  //         res.send(err);
+  //       }
+  //       res.send(results);
+  //     }
+  //   );
+  //parallel
+  parallel(
+    {
+      get_student: function (callback) {
+        //         // async code to get some data
+        Student.find()
+          .then((resss) => {
+            callback(null, 'data', resss);
+          })
+          .catch((err) => {
+            callback(err);
+          });
+      },
+      get_user: function (callback) {
+        User.find()
+          .then((resu) => {
+            callback(null, 'data', resu);
+          })
+          .catch((error) => {
+            callback(error);
+          });
+      },
+    },
+    function (err, results) {
+      if (err) {
+        res.send(err);
+      }
+      res.send(results);
+    }
+  );
+  //   waterfall(
+  //     {
+  //       get_student: function (callback) {
+  //         //         //         // async code to get some data
+  //         Student.find()
+  //           .then((resss) => {
+  //             callback(null, 'data', resss);
+  //           })
+  //           .catch((err) => {
+  //             callback(err);
+  //           });
+  //       },
+  //       get_user: function (callback) {
+  //         User.find()
+  //           .then((resu) => {
+  //             callback(null, 'data', resu);
+  //           })
+  //           .catch((error) => {
+  //             callback(error);
+  //           });
+  //       },
+  //     },
+  //     function (err, results) {
+  //       if (err) {
+  //         res.send(err);
+  //       }
+  //       res.send(results);
+  //     }
+  //   );
+  //   waterfall(
+  //     [
+  //       function (callback) {
+  //         callback(null, 'one', 'two');
+  //       },
+  //       function (arg1, arg2, callback) {
+  //         // arg1 now equals 'one' and arg2 now equals 'two'
+  //         callback(null, 'three');
+  //       },
+  //       function (arg1, callback) {
+  //         // arg1 now equals 'three'
+  //         callback(null, 'done');
+  //       },
+  //     ],
+  //     function (err, result) {
+  //       res.send(result);
+  //       // result now equals 'done'
+  //     }
+  //   );
+};
 
 const controller = {
   async studentregister(req, res) {
@@ -46,6 +158,7 @@ const controller = {
         });
     }
   },
+  task,
 };
 
 module.exports = controller;

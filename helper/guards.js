@@ -53,7 +53,7 @@ const createToken = (user) => {
 const checkUser = (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
-    res.send('token required');
+    response.validationFail(res, 'Auth Token required', 'Auth Token required');
   } else {
     const ress = verifyJWT(req, res);
     if (ress) {
