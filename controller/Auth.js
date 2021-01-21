@@ -52,6 +52,21 @@ const controller = {
       res.send(error);
     }
   },
+
+  // async testArg(req, res) {
+  //   const users = await User.aggregate([
+  //     {
+  //       $lookup: {
+  //         from: 'Profile',
+  //         localfield: 'name',
+  //         foreignfield: 'name',
+  //         as: 'users',
+  //       },
+  //     },
+  //   ]);
+
+  //   res.send(users);
+  // },
 };
 
 module.exports = controller;

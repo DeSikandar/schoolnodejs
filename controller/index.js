@@ -1,4 +1,4 @@
-const { login, signup } = require('./Auth');
+const { login, signup, testArg } = require('./Auth');
 const { studentregister, studentdetails, task } = require('./Student');
 const {
   insertpro,
@@ -21,4 +21,5 @@ module.exports = {
   countProduct,
   totalaboutspent,
   getcustomertotal,
+  testArg,
 };
